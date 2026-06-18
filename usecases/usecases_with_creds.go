@@ -59,63 +59,54 @@ func (usecases *UsecasesWithCreds) NewEnforceSecurity() security.EnforceSecurity
 func (usecases *UsecasesWithCreds) NewEnforceScenarioSecurity() security.EnforceSecurityScenario {
 	return &security.EnforceSecurityScenarioImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceTestRunScenarioSecurity() security.EnforceSecurityTestRun {
 	return &security.EnforceSecurotyTestRunImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceDecisionSecurity() security.EnforceSecurityDecision {
 	return &security.EnforceSecurityDecisionImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforcePhantomDecisionSecurity() security.EnforceSecurityPhantomDecision {
 	return &security.EnforceSecurityPhantomDecisionImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceCustomListSecurity() security.EnforceSecurityCustomList {
 	return &security.EnforceSecurityCustomListImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceOrganizationSecurity() security.EnforceSecurityOrganization {
 	return &security.EnforceSecurityOrganizationImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceIngestionSecurity() security.EnforceSecurityIngestion {
 	return &security.EnforceSecurityIngestionImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceUserSecurity() security.EnforceSecurityUser {
 	return &security.EnforceSecurityUserImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceCaseSecurity() security.EnforceSecurityCase {
 	return &security.EnforceSecurityCaseImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
@@ -134,28 +125,24 @@ func (usecases *UsecasesWithCreds) NewEnforceScreeningSecurity() security.Enforc
 func (usecases *UsecasesWithCreds) NewEnforceAnnotationSecurity() security.EnforceSecurityAnnotation {
 	return &security.EnforceSecurityAnnotationImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceSecurityContinuousScreening() security.EnforceSecurityContinuousScreening {
 	return &security.EnforceSecurityContinuousScreeningImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceSecurityAudit() security.EnforceSecurityAudit {
 	return &security.EnforceSecurityAuditImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
 func (usecases *UsecasesWithCreds) NewEnforceSecurityScoring() security.EnforceSecurityScoring {
 	return &security.EnforceSecurityScoringImpl{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 }
 
@@ -441,7 +428,6 @@ func (usecases *UsecasesWithCreds) NewUserUseCase() UserUseCase {
 func (usecases *UsecasesWithCreds) NewInboxReader() inboxes.InboxReader {
 	sec := security.EnforceSecurityInboxes{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 	return inboxes.InboxReader{
 		EnforceSecurity: sec,
@@ -490,7 +476,6 @@ func (usecases *UsecasesWithCreds) NewSuspiciousActivityReportUsecase() *Suspici
 func (usecases *UsecasesWithCreds) NewInboxUsecase() InboxUsecase {
 	sec := security.EnforceSecurityInboxes{
 		EnforceSecurity: usecases.NewEnforceSecurity(),
-		Credentials:     usecases.Credentials,
 	}
 	executorFactory := usecases.NewExecutorFactory()
 	return InboxUsecase{
@@ -527,7 +512,6 @@ func (usecases *UsecasesWithCreds) NewApiKeyUseCase() ApiKeyUseCase {
 		executorFactory: usecases.NewExecutorFactory(),
 		enforceSecurity: &security.EnforceSecurityApiKeyImpl{
 			EnforceSecurity: usecases.NewEnforceSecurity(),
-			Credentials:     usecases.Credentials,
 		},
 		apiKeyRepository: usecases.Repositories.MarbleDbRepository,
 	}
@@ -537,7 +521,6 @@ func (usecases *UsecasesWithCreds) NewAnalyticsUseCase() AnalyticsUseCase {
 	return AnalyticsUseCase{
 		enforceSecurity: &security.EnforceSecurityAnalyticsImpl{
 			EnforceSecurity: usecases.NewEnforceSecurity(),
-			Credentials:     usecases.Credentials,
 		},
 		analyticsRepository: &usecases.Repositories.MarbleAnalyticsRepository,
 	}
@@ -1143,7 +1126,6 @@ func (usecases *UsecasesWithCreds) NewOrgImportUsecase() OrgImportUsecase {
 		usecases.NewTransactionFactory(),
 		security.EnforceSecurityOrgImportImpl{
 			EnforceSecurity: usecases.NewEnforceSecurity(),
-			Credentials:     usecases.Credentials,
 		},
 		usecases.Repositories.MarbleDbRepository,
 		usecases.Repositories.MarbleDbRepository,
@@ -1169,7 +1151,6 @@ func (usecases *UsecasesWithCreds) NewOrgExportUsecase() OrgExportUsecase {
 		usecases.NewExecutorFactory(),
 		security.EnforceSecurityOrgImportImpl{
 			EnforceSecurity: usecases.NewEnforceSecurity(),
-			Credentials:     usecases.Credentials,
 		},
 		usecases.apiVersion,
 		usecases.Repositories.MarbleDbRepository,

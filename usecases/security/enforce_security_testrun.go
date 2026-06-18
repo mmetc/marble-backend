@@ -15,7 +15,6 @@ type EnforceSecurityTestRun interface {
 
 type EnforceSecurotyTestRunImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurotyTestRunImpl) CreateTestRun(organizationId uuid.UUID) error {
@@ -26,7 +25,7 @@ func (e *EnforceSecurotyTestRunImpl) CreateTestRun(organizationId uuid.UUID) err
 }
 
 func (e *EnforceSecurotyTestRunImpl) ListTestRuns(organizationId uuid.UUID) error {
-	if e.Credentials.Role == models.MARBLE_ADMIN {
+	if e.Creds().Role == models.MARBLE_ADMIN {
 		return errors.Join(
 			e.Permission(models.SCENARIO_READ),
 		)

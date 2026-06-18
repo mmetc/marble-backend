@@ -15,7 +15,6 @@ type EnforceSecurityCase interface {
 
 type EnforceSecurityCaseImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func EnforceSecurityCaseForUser(user models.User) *EnforceSecurityCaseImpl {
@@ -23,7 +22,6 @@ func EnforceSecurityCaseForUser(user models.User) *EnforceSecurityCaseImpl {
 
 	return &EnforceSecurityCaseImpl{
 		EnforceSecurity: NewEnforceSecurity(creds),
-		Credentials:     creds,
 	}
 }
 

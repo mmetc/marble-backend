@@ -17,7 +17,6 @@ type EnforceSecurityScoring interface {
 
 type EnforceSecurityScoringImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityScoringImpl) ReadRecordScore(score models.ScoringScore) error {

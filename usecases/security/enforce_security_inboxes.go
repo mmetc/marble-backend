@@ -8,7 +8,6 @@ import (
 
 type EnforceSecurityInboxes struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e EnforceSecurityInboxes) ReadInbox(i models.Inbox) error {
@@ -19,7 +18,7 @@ func (e EnforceSecurityInboxes) ReadInbox(i models.Inbox) error {
 	}
 
 	// any other user can read an inbox if he is a member of the inbox
-	actorUserIdStr := string(e.Credentials.ActorIdentity.UserId)
+	actorUserIdStr := string(e.Creds().ActorIdentity.UserId)
 	for _, user := range i.InboxUsers {
 		if user.UserId.String() == actorUserIdStr {
 			return nil
@@ -39,7 +38,7 @@ func (e EnforceSecurityInboxes) CreateInbox(organizationId uuid.UUID) error {
 
 func (e EnforceSecurityInboxes) UpdateInbox(inbox models.Inbox) error {
 	// Inbox admins are allowed to update the inbox, even if they are not organization admins
-	actorUserIdStr := string(e.Credentials.ActorIdentity.UserId)
+	actorUserIdStr := string(e.Creds().ActorIdentity.UserId)
 	for _, inboxMember := range inbox.InboxUsers {
 		if inboxMember.UserId.String() == actorUserIdStr &&
 			inboxMember.Role == models.InboxUserRoleAdmin {
@@ -70,7 +69,7 @@ func (e EnforceSecurityInboxes) ReadInboxUser(inboxUser models.InboxUser, actorI
 func (e EnforceSecurityInboxes) CreateInboxUser(
 	i models.CreateInboxUserInput, actorInboxUsers []models.InboxUser, targetInbox models.Inbox, targetUser models.User,
 ) error {
-	organizationId := e.Credentials.OrganizationId
+	organizationId := e.Creds().OrganizationId
 	if targetUser.OrganizationId != organizationId {
 		return errors.Wrap(models.ForbiddenError, "Target user does not belong to the right organization")
 	}

@@ -14,7 +14,6 @@ type EnforceSecurityAnnotation interface {
 
 type EnforceSecurityAnnotationImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityAnnotationImpl) DeleteAnnotation() error {

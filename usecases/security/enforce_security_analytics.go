@@ -8,7 +8,6 @@ import (
 
 type EnforceSecurityAnalyticsImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityAnalyticsImpl) ReadAnalytics(analytics models.Analytics) error {

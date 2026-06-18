@@ -13,6 +13,7 @@ type EnforceSecurity interface {
 	ReadOrganization(organizationId uuid.UUID) error
 	Permissions(permissions []models.Permission) error
 
+	Creds() models.Credentials
 	OrgId() uuid.UUID
 	UserId() *string
 	ApiKeyId() *string
@@ -26,6 +27,10 @@ func NewEnforceSecurity(credentials models.Credentials) *EnforceSecurityImpl {
 	return &EnforceSecurityImpl{
 		Credentials: credentials,
 	}
+}
+
+func (e *EnforceSecurityImpl) Creds() models.Credentials {
+	return e.Credentials
 }
 
 func (e *EnforceSecurityImpl) OrgId() uuid.UUID {

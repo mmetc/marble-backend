@@ -21,7 +21,6 @@ type EnforceSecurityScenario interface {
 
 type EnforceSecurityScenarioImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityScenarioImpl) ReadScenario(scenario models.Scenario) error {

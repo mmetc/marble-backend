@@ -17,7 +17,6 @@ func Test_ReadInbox(t *testing.T) {
 		creds := models.Credentials{Role: models.ADMIN, OrganizationId: orgId}
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("right org", func(t *testing.T) {
@@ -38,7 +37,6 @@ func Test_ReadInbox(t *testing.T) {
 		creds := models.Credentials{Role: models.MARBLE_ADMIN, OrganizationId: orgId}
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("right org", func(t *testing.T) {
@@ -63,7 +61,6 @@ func Test_ReadInbox(t *testing.T) {
 		creds := models.Credentials{Role: models.BUILDER, OrganizationId: orgId, ActorIdentity: specificActorIdentity}
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("User is member of the inbox", func(t *testing.T) {
@@ -96,7 +93,6 @@ func Test_CreateInbox(t *testing.T) {
 		creds := models.Credentials{Role: models.ADMIN, OrganizationId: orgId}
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("creating an inbox in the same org should succeed", func(t *testing.T) {
@@ -117,7 +113,6 @@ func Test_CreateInbox(t *testing.T) {
 		creds := models.Credentials{Role: models.BUILDER, OrganizationId: orgId, ActorIdentity: actorIdentity}
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		err := sec.CreateInbox(orgId)
@@ -142,7 +137,6 @@ func Test_ReadInboxUser(t *testing.T) {
 		creds := models.Credentials{Role: models.ADMIN, OrganizationId: orgId}
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("Should be able to read any inbox user from the org", func(t *testing.T) {
@@ -166,7 +160,6 @@ func Test_ReadInboxUser(t *testing.T) {
 		creds := models.Credentials{Role: models.BUILDER, OrganizationId: orgId, ActorIdentity: actorIdentity}
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("Should be able to read an inbox user if the calling user is member of the inbox", func(t *testing.T) {
@@ -201,7 +194,6 @@ func Test_CreateInboxUser(t *testing.T) {
 
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("Should be able to create an inbox user in any inbox", func(t *testing.T) {
@@ -261,7 +253,6 @@ func Test_CreateInboxUser(t *testing.T) {
 		orgIdNonAdmin := creds.OrganizationId
 		sec := security.EnforceSecurityInboxes{
 			EnforceSecurity: &security.EnforceSecurityImpl{Credentials: creds},
-			Credentials:     creds,
 		}
 
 		t.Run("Should be able to create an inbox user in an inbox if the calling user is admin of the inbox", func(t *testing.T) {

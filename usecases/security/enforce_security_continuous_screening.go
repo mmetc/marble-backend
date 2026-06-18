@@ -19,7 +19,6 @@ type EnforceSecurityContinuousScreening interface {
 
 type EnforceSecurityContinuousScreeningImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityContinuousScreeningImpl) ReadContinuousScreeningConfig(config models.ContinuousScreeningConfig) error {

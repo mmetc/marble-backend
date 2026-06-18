@@ -15,7 +15,6 @@ type EnforceSecurityCustomList interface {
 
 type EnforceSecurityCustomListImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityCustomListImpl) ReadCustomList(customList models.CustomList) error {

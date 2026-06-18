@@ -18,7 +18,6 @@ type EnforceSecurityUser interface {
 
 type EnforceSecurityUserImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityUserImpl) ReadUser(user models.User) error {
@@ -31,7 +30,7 @@ func (e *EnforceSecurityUserImpl) ReadUser(user models.User) error {
 }
 
 func (e *EnforceSecurityUserImpl) CreateUser(input models.CreateUser) error {
-	if input.Role == models.MARBLE_ADMIN && e.Credentials.Role != models.MARBLE_ADMIN {
+	if input.Role == models.MARBLE_ADMIN && e.Creds().Role != models.MARBLE_ADMIN {
 		return errors.Wrap(
 			models.ForbiddenError,
 			"only marble admins can create marble admins",
@@ -41,7 +40,7 @@ func (e *EnforceSecurityUserImpl) CreateUser(input models.CreateUser) error {
 	// should already be handled by the fact that only the ADMIN & MARBLE_ADMIN roles have the
 	// MARBLE_USER_CREATE permission, but make double sure
 	if input.Role == models.ADMIN &&
-		!(e.Credentials.Role == models.ADMIN || e.Credentials.Role == models.MARBLE_ADMIN) {
+		!(e.Creds().Role == models.ADMIN || e.Creds().Role == models.MARBLE_ADMIN) {
 		return errors.Wrap(
 			models.ForbiddenError,
 			"only org admins and marble admins can create org admins",
@@ -58,22 +57,22 @@ func (e *EnforceSecurityUserImpl) UpdateUser(targetUser models.User, updateUser 
 	// Only marble admins can create marble admins
 	if updateUser.Role != nil &&
 		*updateUser.Role == models.MARBLE_ADMIN &&
-		e.Credentials.Role != models.MARBLE_ADMIN {
+		e.Creds().Role != models.MARBLE_ADMIN {
 		return errors.Wrap(
 			models.BadParameterError,
 			"only marble admins can create marble admins")
 	}
 
 	// Fail early if current user is not an ADMIN and they try to change a user's role.
-	if updateUser.Role != nil && e.Credentials.Role != models.ADMIN &&
-		e.Credentials.Role != models.MARBLE_ADMIN {
+	if updateUser.Role != nil && e.Creds().Role != models.ADMIN &&
+		e.Creds().Role != models.MARBLE_ADMIN {
 		return errors.Wrap(models.UnAuthorizedError, "only admins can change a user's role")
 	}
 
 	// An admin cannot strip their own ADMIN role.
 	if updateUser.Role != nil &&
-		e.Credentials.Role == models.ADMIN &&
-		e.Credentials.ActorIdentity.UserId == targetUser.UserId &&
+		e.Creds().Role == models.ADMIN &&
+		e.Creds().ActorIdentity.UserId == targetUser.UserId &&
 		*updateUser.Role != models.ADMIN {
 		return errors.Wrap(models.BadParameterError, "Cannot remove yourself as an admin")
 	}
@@ -81,14 +80,14 @@ func (e *EnforceSecurityUserImpl) UpdateUser(targetUser models.User, updateUser 
 	// Only org admins and marble admins can create org admins
 	if updateUser.Role != nil &&
 		*updateUser.Role == models.ADMIN &&
-		!(e.Credentials.Role == models.ADMIN || e.Credentials.Role == models.MARBLE_ADMIN) {
+		!(e.Creds().Role == models.ADMIN || e.Creds().Role == models.MARBLE_ADMIN) {
 		return errors.Wrap(models.BadParameterError,
 			"Only org admins and marble admins can create org admins")
 	}
 
 	// non admins can only update themselves
-	if (e.Credentials.Role != models.MARBLE_ADMIN && e.Credentials.Role != models.ADMIN) &&
-		e.Credentials.ActorIdentity.UserId != targetUser.UserId {
+	if (e.Creds().Role != models.MARBLE_ADMIN && e.Creds().Role != models.ADMIN) &&
+		e.Creds().ActorIdentity.UserId != targetUser.UserId {
 		return errors.Wrap(models.ForbiddenError, "non-admins can only update themselves")
 	}
 
@@ -107,7 +106,7 @@ func (e *EnforceSecurityUserImpl) DeleteUser(user models.User) error {
 }
 
 func (e *EnforceSecurityUserImpl) ListUsers(organizationId *uuid.UUID) error {
-	if e.Credentials.Role == models.MARBLE_ADMIN {
+	if e.Creds().Role == models.MARBLE_ADMIN {
 		return errors.Join(
 			e.Permission(models.MARBLE_USER_LIST),
 		)

@@ -9,7 +9,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type mockUserEnforceSecurity struct{}
+type mockUserEnforceSecurity struct {
+	creds models.Credentials
+}
+
+func (m mockUserEnforceSecurity) Creds() models.Credentials {
+	return m.creds
+}
 
 func (mockUserEnforceSecurity) Permission(permission models.Permission) error {
 	return nil
@@ -57,12 +63,11 @@ func TestUpdateUserRole(t *testing.T) {
 	for _, tt := range tts {
 		t.Run(tt.name, func(t *testing.T) {
 			e := EnforceSecurityUserImpl{
-				EnforceSecurity: mockUserEnforceSecurity{},
-				Credentials: models.Credentials{
+				EnforceSecurity: mockUserEnforceSecurity{creds: models.Credentials{
 					OrganizationId: utils.TextToUUID("org"),
 					ActorIdentity:  models.Identity{UserId: "principal"},
 					Role:           tt.principal,
-				},
+				}},
 			}
 
 			target := models.User{OrganizationId: utils.TextToUUID("org"), UserId: "target", Role: tt.from}

@@ -9,7 +9,6 @@ import (
 
 type EnforceSecurityApiKeyImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityApiKeyImpl) ReadApiKey(apiKey models.ApiKey) error {

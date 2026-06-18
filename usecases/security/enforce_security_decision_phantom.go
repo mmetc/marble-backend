@@ -13,7 +13,6 @@ type EnforceSecurityPhantomDecision interface {
 
 type EnforceSecurityPhantomDecisionImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityPhantomDecisionImpl) CreatePhantomDecision(organizationId uuid.UUID) error {

@@ -14,7 +14,6 @@ type EnforceSecurityIngestion interface {
 
 type EnforceSecurityIngestionImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityIngestionImpl) CanIngest(organizationId uuid.UUID) error {

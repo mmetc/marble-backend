@@ -28,6 +28,11 @@ func (e *EnforceSecurity) Permissions(permissions []models.Permission) error {
 	return args.Error(0)
 }
 
+func (e *EnforceSecurity) Creds() models.Credentials {
+	args := e.Called()
+	return args.Get(0).(models.Credentials)
+}
+
 func (e *EnforceSecurity) OrgId() uuid.UUID {
 	args := e.Called()
 	return args.Get(0).(uuid.UUID)

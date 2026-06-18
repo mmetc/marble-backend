@@ -20,7 +20,6 @@ type EnforceSecurityOrganization interface {
 
 type EnforceSecurityOrganizationImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityOrganizationImpl) ListOrganization() error {

@@ -17,7 +17,6 @@ type EnforceSecurityDecision interface {
 
 type EnforceSecurityDecisionImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityDecisionImpl) ReadDecision(decision models.Decision) error {

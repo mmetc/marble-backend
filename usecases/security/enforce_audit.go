@@ -13,13 +13,12 @@ type EnforceSecurityAudit interface {
 
 type EnforceSecurityAuditImpl struct {
 	EnforceSecurity
-	Credentials models.Credentials
 }
 
 func (e *EnforceSecurityAuditImpl) ReadAuditEvents() error {
-	if e.Credentials.Role != models.ADMIN {
+	if e.Creds().Role != models.ADMIN {
 		return errors.Wrap(models.ForbiddenError, "only admins can read audit events")
 	}
 
-	return e.ReadOrganization(e.Credentials.OrganizationId)
+	return e.ReadOrganization(e.Creds().OrganizationId)
 }
