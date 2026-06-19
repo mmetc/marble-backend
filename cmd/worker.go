@@ -71,10 +71,7 @@ func RunTaskQueue(apiVersion string, only, onlyArgs string) error {
 		RateLimit: utils.GetEnv("CONVOY_RATE_LIMIT", 50),
 	}
 
-	licenseConfig := models.LicenseConfiguration{
-		LicenseKey:             utils.GetEnv("LICENSE_KEY", ""),
-		KillIfReadLicenseError: utils.GetEnv("KILL_IF_READ_LICENSE_ERROR", false),
-	}
+	licenseConfig := infra.NewLicenseConfiguration()
 
 	workerConfig := WorkerConfig{
 		appName:                      "marble-backend-worker",
